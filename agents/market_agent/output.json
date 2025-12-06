@@ -1,0 +1,58 @@
+{
+  "symbol": "AAPL",
+  "price": 278.7799987792969,
+  "indicators": {
+    "sma20": 274.7565002441406,
+    "sma50": null,
+    "ema20": 276.2451386558263,
+    "ema50": null,
+    "rsi": 57.67910130844084,
+    "macd": null,
+    "bollinger": {
+      "upper": 286.4269617621014,
+      "middle": 274.7565002441406,
+      "lower": 263.0860387261798
+    },
+    "volatility": 5.986820438135319,
+    "momentum": 4.70610282790493,
+    "volume_avg": 45912535.0,
+    "volume_spike_ratio": 1.0290000323441082
+  },
+  "summary": "The technical analysis of AAPL shows a moderately positive outlook, with the stock price trading above the 20-day moving average and exhibiting neutral momentum and volatility levels. The Bollinger Bands and volume data also suggest a stable trading environment. Investors may consider holding or cautiously adding to their AAPL positions, while closely monitoring the stock's performance.",
+  "llm_analysis": {
+    "trend_analysis": {
+      "insight": "The current price of AAPL is above the 20-day simple moving average (SMA20), indicating a potential upward trend.",
+      "confidence": 0.7,
+      "reasoning": "The current price of $278.78 is above the SMA20 of $274.76, suggesting the stock is in an upward trend in the short term. However, the lack of 50-day SMA and EMA data limits the confidence in the long-term trend assessment."
+    },
+    "momentum_interpretation": {
+      "insight": "The momentum indicator suggests a moderately positive momentum for AAPL.",
+      "confidence": 0.6,
+      "reasoning": "The momentum indicator value of 4.71 indicates a positive momentum, but the lack of MACD data limits the confidence in the overall momentum assessment."
+    },
+    "rsi_insights": {
+      "insight": "The RSI value of 57.68 suggests the stock is in a neutral territory, neither overbought nor oversold.",
+      "confidence": 0.8,
+      "reasoning": "The RSI value of 57.68 is within the neutral range of 30-70, indicating the stock is not in an overbought or oversold condition, which is a positive signal."
+    },
+    "bollinger_insights": {
+      "insight": "The Bollinger Bands suggest the stock price is within the normal range, with no immediate signs of volatility.",
+      "confidence": 0.8,
+      "reasoning": "The current price of $278.78 is within the Bollinger Bands, with the upper band at $286.43 and the lower band at $263.09, indicating the stock is trading within its normal price range and not experiencing significant volatility."
+    },
+    "volume_insights": {
+      "insight": "The volume data suggests normal trading activity for AAPL.",
+      "confidence": 0.7,
+      "reasoning": "The average daily volume of 45,912,535 shares and the volume spike ratio of 1.03 indicate normal trading activity, with no significant spikes or unusual volume patterns."
+    },
+    "volatility_insights": {
+      "insight": "The volatility level for AAPL is moderate, suggesting a relatively stable trading environment.",
+      "confidence": 0.7,
+      "reasoning": "The volatility indicator value of 5.99% is within a moderate range, indicating the stock is not experiencing high levels of volatility, which is a positive signal for the trading environment."
+    },
+    "actionable_guidance": "Based on the available data, the overall technical indicators for AAPL suggest a neutral to slightly positive outlook. The stock appears to be in a stable trading environment with no immediate signs of significant volatility or overbought/oversold conditions. Investors may consider holding or cautiously adding to their AAPL positions, while closely monitoring the stock's performance and any changes in the technical indicators.",
+    "overall_confidence": 0.7,
+    "human_readable_summary": "The technical analysis of AAPL shows a moderately positive outlook, with the stock price trading above the 20-day moving average and exhibiting neutral momentum and volatility levels. The Bollinger Bands and volume data also suggest a stable trading environment. Investors may consider holding or cautiously adding to their AAPL positions, while closely monitoring the stock's performance."
+  },
+  "success": true
+}

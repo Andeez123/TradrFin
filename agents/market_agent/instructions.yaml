@@ -1,0 +1,78 @@
+# Task: Build a full Python Market Data Agent / Apify Actor
+# Purpose: Fetch market data, compute technical indicators, generate human-readable summaries via Cursor, return structured JSON
+# Workflow: Production-ready → Deployment → Testing → Error handling/fixes
+# Tech Stack: Python 3.10+, Apify Python SDK (optional), pandas, numpy, ta (technical indicators), requests, Cursor API for summary, pytest for tests
+
+# Agent Responsibilities
+
+1. Accept input JSON:
+{
+  "symbol": "BTC-USD",
+  "data_type": "quote|historical",
+  "interval": "1h|1d|5m",
+  "range": "1mo|3mo|6mo|1y"
+}
+
+2. Fetch market data from Yahoo Finance or any free market API:
+- Current price
+- OHLCV
+- Historical data
+- Use `requests` or Apify SDK
+
+3. Compute technical indicators using `pandas` and `ta`:
+- SMA20, SMA50
+- EMA20, EMA50
+- RSI14
+- MACD12,26,9
+- Bollinger Bands (20)
+- Volatility = stddev(closing, 20 periods)
+- Momentum = % price change last 10 candles
+- Volume spike = lastVolume > 2 * avgVolume
+
+4. Apply deterministic rules:
+- Trend: price > SMA20 → bullish, < SMA20 → bearish, ±1% → sideways
+- Momentum: EMA20 > EMA50 → strong_up, < EMA50 → down
+- RSI: >70 → overbought, <30 → oversold
+- Volume: lastVolume > 2 × avgVolume → spike
+- Volatility: stddev > 1.5 × average → high
+
+5. Generate human-readable summary using **Cursor API**:
+- Input: JSON of computed indicators
+- Output: natural language summary including trend, momentum, RSI state, volume, volatility
+- Example: “BTC is showing strong bullish momentum (EMA20 > EMA50). RSI indicates overbought conditions (78). Volume spike detected. Volatility is elevated.”
+
+6. Return structured JSON:
+{
+  "symbol": string,
+  "price": float,
+  "indicators": { sma20, sma50, ema20, ema50, rsi, macd, bollinger, momentum, volume, volatility },
+  "trend": "bullish" | "bearish" | "sideways",
+  "momentum_state": "strong_up" | "weak_up" | "down" | "flat",
+  "rsi_state": "overbought" | "oversold" | "neutral",
+  "volume_state": "spike" | "normal" | "low",
+  "volatility_state": "high" | "medium" | "low",
+  "summary": string
+}
+
+# Project Structure
+
+market_agent/
+    main.py                     (entry point)
+    services/
+        market_service.py       (fetch & parse data)
+        analysis_service.py     (compute indicators & summary)
+        cursor_summary.py       (generate human-readable summary via Cursor)
+    utils/
+        indicator_utils.py
+    types/
+        market_types.py
+    requirements.txt
+    README.md                  (instructions to run, deploy, and test)
+    tests/
+        test_analysis.py
+        test_market_service.py
+        test_cursor_summary.py
+
+# Documentation
+Include:
+- README.md
