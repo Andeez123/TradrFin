@@ -1,0 +1,15 @@
+{
+  "actorSpecification": 1,
+  "name": "news-scrapper",
+  "title": "News Scrapper",
+  "description": "Custom Apify Actor that collects financial news and social sentiment data for market analysis",
+  "version": "2.0.0",
+  "meta": {
+    "templateId": "getting-started-playwright"
+  },
+  "input": "./INPUT_SCHEMA.json",
+  "storages": {
+    "dataset": "./storage/datasets",
+    "keyValueStore": "./storage/key_value_stores"
+  }
+}

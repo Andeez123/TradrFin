@@ -1,0 +1,46 @@
+{
+  "title": "Financial Sentiment Collector Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "query": {
+      "title": "Search Query",
+      "type": "string",
+      "description": "Financial query to search for (e.g., 'NVIDIA', 'Bitcoin', 'S&P500')",
+      "default": "NVIDIA",
+      "editor": "textfield"
+    },
+    "maxNewsItems": {
+      "title": "Max News Items",
+      "type": "integer",
+      "description": "Maximum number of news articles to collect",
+      "default": 10,
+      "minimum": 1,
+      "maximum": 100
+    },
+    "maxSocialItems": {
+      "title": "Max Social Items",
+      "type": "integer",
+      "description": "Maximum number of social media posts to collect",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 100
+    },
+    "includeSocial": {
+      "title": "Include Social Media",
+      "type": "boolean",
+      "description": "Whether to collect social media data",
+      "default": true
+    },
+    "maxDaysOld": {
+      "title": "Max Days Old",
+      "type": "integer",
+      "description": "Maximum age of articles in days (only articles published within this period will be included)",
+      "default": 7,
+      "minimum": 1,
+      "maximum": 365
+    }
+  },
+  "required": ["query"]
+}
+

@@ -1,0 +1,26 @@
+{
+  "name": "financial-sentiment-collector",
+  "version": "1.0.0",
+  "description": "Custom Apify Actor for collecting financial news and social sentiment data",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "apify": "^3.0.0",
+    "crawlee": "^3.0.0",
+    "@anthropic-ai/sdk": "^0.27.0"
+  },
+  "keywords": [
+    "apify",
+    "actor",
+    "financial",
+    "news",
+    "sentiment"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+
