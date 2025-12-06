@@ -100,3 +100,4 @@ agents/decision agent/transaction_log.json
 .cache/
 .parcel-cache/
 
+.vercel
