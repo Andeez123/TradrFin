@@ -1,24 +1,6 @@
-const fs = require('fs');
-const path = require('path');
+// Load environment variables
+require('dotenv').config();
 
-// Load environment variables manually since dotenv seems to have issues
-const envPath = path.resolve(__dirname, '.env');
-
-if (fs.existsSync(envPath)) {
-    const envContent = fs.readFileSync(envPath, 'utf16le');
-    const envLines = envContent.split('\n');
-
-    envLines.forEach(line => {
-        const trimmed = line.trim();
-        if (trimmed && !trimmed.startsWith('#')) {
-            const [key, ...valueParts] = trimmed.split('=');
-            if (key && valueParts.length > 0) {
-                const value = valueParts.join('=').replace(/^["']|["']$/g, ''); // Remove quotes
-                process.env[key.trim()] = value.trim();
-            }
-        }
-    });
-}
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -34,7 +16,7 @@ const pool = mysql.createPool({
     user: process.env.DB_USER || 'your-db-username',
     password: process.env.DB_PASSWORD || 'your-db-password',
     database: process.env.DB_NAME || 'your-database-name',
-    port: process.env.DB_PORT || 3306,
+    port: parseInt(process.env.DB_PORT) || 3306,
     ssl: process.env.DB_SSL === 'true' ? {
         rejectUnauthorized: true
     } : false,
@@ -107,7 +89,7 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT) || 5000;
 app.listen(PORT, () => {
     console.log(`Backend Server running on port ${PORT}`);
     console.log('Make sure to set your cloud database environment variables in .env file');
@@ -123,7 +105,7 @@ app.post('/api/chat', (req, res) => {
         const query = 'SELECT summary, sentiment FROM sentiment_agent ORDER BY id DESC LIMIT 1';
         pool.query(query, (err, results) => {
             if (err || results.length === 0) return res.json({ reply: "I'm having trouble accessing the news feed right now." });
-            
+
             const row = results[0];
             const reply = `Based on the latest analysis, market sentiment is currently **${row.sentiment.toUpperCase()}**. The key driver is: "${row.summary}"`;
             res.json({ reply });
@@ -136,7 +118,7 @@ app.post('/api/chat', (req, res) => {
         const query = "SELECT price, rsi, summary FROM market_data_agent WHERE ticker = 'TSLA' ORDER BY date DESC LIMIT 1";
         pool.query(query, (err, results) => {
             if (err || results.length === 0) return res.json({ reply: "I don't have recent data for Tesla at the moment." });
-            
+
             const row = results[0];
             const reply = `Tesla (TSLA) is trading at **$${row.price}**. The RSI is ${row.rsi.toFixed(1)}. My technical analysis suggests: "${row.summary}"`;
             res.json({ reply });
@@ -146,8 +128,8 @@ app.post('/api/chat', (req, res) => {
 
     // 3. Default / General Fallback
     setTimeout(() => {
-        res.json({ 
-            reply: "I am your Financial AI Copilot. You can ask me about **Market Sentiment**, specific stocks like **TSLA** or **MSFT**, or review your **Trade History**." 
+        res.json({
+            reply: "I am your Financial AI Copilot. You can ask me about **Market Sentiment**, specific stocks like **TSLA** or **MSFT**, or review your **Trade History**."
         });
     }, 500); // Fake delay for realism
 });
