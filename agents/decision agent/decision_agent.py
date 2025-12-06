@@ -35,14 +35,18 @@ def load_precomputed_data(symbol: str) -> pd.DataFrame:
     if symbol in _precomputed_cache:
         return _precomputed_cache[symbol]
     
+    # Get the directory where this file is located (decision agent directory)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
     # Find the most recent CSV file for this symbol
-    files = [f for f in os.listdir(".") if f.startswith(f"{symbol}_indicators_") and f.endswith(".csv")]
+    files = [f for f in os.listdir(current_dir) if f.startswith(f"{symbol}_indicators_") and f.endswith(".csv")]
     if not files:
         return None
     
     # Use the most recent file
     latest_file = sorted(files)[-1]
-    df = pd.read_csv(latest_file, index_col=0, parse_dates=True)
+    file_path = os.path.join(current_dir, latest_file)
+    df = pd.read_csv(file_path, index_col=0, parse_dates=True)
     
     # Cache it
     _precomputed_cache[symbol] = df
