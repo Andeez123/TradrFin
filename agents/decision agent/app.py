@@ -69,7 +69,7 @@ async def autonomous_test_loop(interval_seconds: int = 2):
     # Initialize CSV log
     csv_log_file = open(csv_log_filename, 'w', newline='')
     csv_writer = csv.DictWriter(csv_log_file, fieldnames=[
-        'date', 'symbol', 'action', 'shares', 'price', 'amount_spent', 'balance_after', 'status', 'reason'
+        'ticker', 'movement_score', 'action', 'quantity', 'price', 'executed_at', 'status', 'summary'
     ])
     csv_writer.writeheader()
     
@@ -184,15 +184,14 @@ async def autonomous_test_loop(interval_seconds: int = 2):
                         
                         # Log to CSV
                         csv_writer.writerow({
-                            'date': trading_date,
-                            'symbol': symbol,
-                            'action': 'BUY',
-                            'shares': result.get('shares', 0),
-                            'price': f"{price:.2f}",
-                            'amount_spent': f"{result.get('total_cost', 0):.2f}",
-                            'balance_after': f"{user_state['investment_balance']:.2f}",
-                            'status': 'SUCCESS',
-                            'reason': ''
+                            'ticker': symbol,
+                            'movement_score': f"{market_data[symbol].get('movement_score', 0.0):.4f}",
+                            'action': 'buy',
+                            'quantity': f"{result.get('shares', 0):.4f}",
+                            'price': f"{price:.4f}",
+                            'executed_at': trading_date,
+                            'status': 'executed',
+                            'summary': reason
                         })
                         csv_log_file.flush()
                     else:
@@ -200,15 +199,14 @@ async def autonomous_test_loop(interval_seconds: int = 2):
                         
                         # Log failed transaction to CSV
                         csv_writer.writerow({
-                            'date': trading_date,
-                            'symbol': symbol,
-                            'action': 'BUY',
-                            'shares': 0,
-                            'price': f"{price:.2f}",
-                            'amount_spent': '0.00',
-                            'balance_after': f"{user_state['investment_balance']:.2f}",
-                            'status': 'FAILED',
-                            'reason': result.get('reason', 'Unknown error')
+                            'ticker': symbol,
+                            'movement_score': f"{market_data[symbol].get('movement_score', 0.0):.4f}",
+                            'action': 'buy',
+                            'quantity': '0.0000',
+                            'price': f"{price:.4f}",
+                            'executed_at': trading_date,
+                            'status': 'failed',
+                            'summary': result.get('reason', 'Unknown error')
                         })
                         csv_log_file.flush()
                 elif action == "SELL":
@@ -222,15 +220,14 @@ async def autonomous_test_loop(interval_seconds: int = 2):
                         
                         # Log to CSV
                         csv_writer.writerow({
-                            'date': trading_date,
-                            'symbol': symbol,
-                            'action': 'SELL',
-                            'shares': result.get('shares', 0),
-                            'price': f"{price:.2f}",
-                            'amount_spent': f"-{result.get('revenue', 0):.2f}",  # Negative for revenue
-                            'balance_after': f"{user_state['investment_balance']:.2f}",
-                            'status': 'SUCCESS',
-                            'reason': ''
+                            'ticker': symbol,
+                            'movement_score': f"{market_data[symbol].get('movement_score', 0.0):.4f}",
+                            'action': 'sell',
+                            'quantity': f"{result.get('shares', 0):.4f}",
+                            'price': f"{price:.4f}",
+                            'executed_at': trading_date,
+                            'status': 'executed',
+                            'summary': reason
                         })
                         csv_log_file.flush()
                     else:
@@ -238,31 +235,29 @@ async def autonomous_test_loop(interval_seconds: int = 2):
                         
                         # Log failed transaction to CSV
                         csv_writer.writerow({
-                            'date': trading_date,
-                            'symbol': symbol,
-                            'action': 'SELL',
-                            'shares': 0,
-                            'price': f"{price:.2f}",
-                            'amount_spent': '0.00',
-                            'balance_after': f"{user_state['investment_balance']:.2f}",
-                            'status': 'FAILED',
-                            'reason': result.get('reason', 'Unknown error')
+                            'ticker': symbol,
+                            'movement_score': f"{market_data[symbol].get('movement_score', 0.0):.4f}",
+                            'action': 'sell',
+                            'quantity': '0.0000',
+                            'price': f"{price:.4f}",
+                            'executed_at': trading_date,
+                            'status': 'failed',
+                            'summary': result.get('reason', 'Unknown error')
                         })
                         csv_log_file.flush()
                 else:
                     print(f"HOLD decision for {symbol} - no action taken")
                     
-                    # Log HOLD to CSV
+                    # Log HOLD to CSV (as pending since no action taken)
                     csv_writer.writerow({
-                        'date': trading_date,
-                        'symbol': symbol,
-                        'action': 'HOLD',
-                        'shares': 0,
-                        'price': f"{price:.2f}",
-                        'amount_spent': '0.00',
-                        'balance_after': f"{user_state['investment_balance']:.2f}",
-                        'status': 'SUCCESS',
-                        'reason': ''
+                        'ticker': symbol,
+                        'movement_score': f"{market_data[symbol].get('movement_score', 0.0):.4f}",
+                        'action': 'hold',
+                        'quantity': '0.0000',
+                        'price': f"{price:.4f}",
+                        'executed_at': trading_date,
+                        'status': 'pending',
+                        'summary': reason
                     })
                     csv_log_file.flush()
 
