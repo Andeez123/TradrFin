@@ -2,8 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/api/index.py",
-      "use": "@vercel/python"
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     },
     {
       "src": "frontend/package.json",
@@ -15,8 +15,24 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "backend/api/index.py"
+      "src": "/api/sentiment",
+      "dest": "/api/sentiment.js"
+    },
+    {
+      "src": "/api/market-data",
+      "dest": "/api/market-data.js"
+    },
+    {
+      "src": "/api/transactions",
+      "dest": "/api/transactions.js"
+    },
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
+    },
+    {
+      "src": "/api/health",
+      "dest": "/api/health.js"
     },
     {
       "src": "/(.*)",
